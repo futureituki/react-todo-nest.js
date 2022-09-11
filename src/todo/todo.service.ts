@@ -33,6 +33,7 @@ export class TodoService {
     });
   }
   async createTask(userId: number, dto:CreateTaskDto): Promise<Task> {
+    console.log(typeof dto.createdAt)
     const task =  await this.prisma.task.create({
       data: {
         userId,
@@ -86,13 +87,13 @@ export class TodoService {
     ): Promise<Task> {
       console.log(done)
       const bool = JSON.stringify(done) === "{}"
-      console.log(bool)
+      const result = bool ? true : false
         const task =  await this.prisma.task.update({
         where: {
           id:taskId
         },
         data: {
-          done: bool ? true : false
+          done:result
         }
       })
       if(!task) {
